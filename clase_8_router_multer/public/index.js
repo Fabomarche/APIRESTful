@@ -1,4 +1,4 @@
-/*  document.querySelector('#image').addEventListener('change', event => {
+document.querySelector('#image').addEventListener('change', event => {
     handleImageUpload(event)
 }) 
 const handleImageUpload = event => {
@@ -19,7 +19,7 @@ const handleImageUpload = event => {
         console.error(error)
         })
     }
- */
+
 
 document.addEventListener('submit', event => {
     event.preventDefault()
@@ -27,7 +27,7 @@ document.addEventListener('submit', event => {
     let form = document.querySelector('#productForm')
     let data = new FormData(form)
 
-    let fileInput = document.querySelector('#image')
+    /* let fileInput = document.querySelector('#image')
     let imgData = new FormData(form);
     imgData.append('image', fileInput.files[0]);
     
@@ -45,7 +45,7 @@ document.addEventListener('submit', event => {
     .catch(error => {
         console.error(error)
     })
-
+ */
 
     let req = {
         title: data.get('title'),
