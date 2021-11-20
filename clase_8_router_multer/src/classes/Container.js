@@ -1,13 +1,13 @@
-const fs = require('fs')
-const { title } = require('process')
+import fs from 'fs';
 
 class Container {
     constructor(archiveName){
         this.archiveName = archiveName
     }
     
-    
+        
     async save(product){
+        console.log(product)
         try{
             
             let data = await fs.promises.readFile(`./files/${this.archiveName}.txt`, 'utf-8')
@@ -17,12 +17,13 @@ class Container {
                 console.log(`${JSON.stringify(product.title)} ya existe en ${this.archiveName}`)
                 return {status:"error", message:"Este producto ya existe"}
             }else{
-                let dataProduct = {
+                let dataProduct = Object.assign({
                     id: products.length + 1,
                     title: product.title,
                     price: product.price,                                                                                                                                     
                     thumbnail: product.thumbnail,                                                                                                       
-                }
+                })
+                console.log(dataProduct)
                 products.push(dataProduct)
                 
                 try{
@@ -36,12 +37,12 @@ class Container {
             }
         }
         catch(err){
-            let dataProduct = {
+            let dataProduct = Object.assign({
                 id: 1,
                 title: product.title,
                 price: product.price,                                                                                                                                     
                 thumbnail: product.thumbnail,                                                                                                                                                                                 
-            }
+            })
             try{
                 await fs.promises.writeFile(`./files/${this.archiveName}.txt`, JSON.stringify([dataProduct], null, 2))
                 console.log(`Se creó ./files/${this.archiveName}.txt y se agregó ${product.title}`)
@@ -151,4 +152,4 @@ class Container {
     }
 }
 
-module.exports = Container
+export default Container

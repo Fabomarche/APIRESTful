@@ -16,5 +16,11 @@
     "title": "Globo Terráqueo",
     "price": 345.67,
     "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/globe-earth-geograhy-planet-school-256.png"
+  },
+  {
+    "id": 4,
+    "title": "remera",
+    "price": "1200",
+    "thumbnail": "http://localhost:8080/images/1637439820802image.jpeg"
   }
 ]

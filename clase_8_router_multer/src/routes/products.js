@@ -1,8 +1,8 @@
-const express = require('express')
+import express from 'express'
 const router = express.Router()
-const upload = require('../services/upload')
+import upload from '../services/upload.js'
 
-const Container = require('../classes/Container')
+import Container from '../classes/Container.js'
 const productsContainer = new Container('products');
 
 //GETS
@@ -26,10 +26,10 @@ router.get('/:pid', (req, res) => {
 
 //POSTS
 router.post('/', upload.single('image'), (req, res) => {
+    let file = req.file
+    console.log(req.body)
     let product = req.body
-    console.log(product)
-    // let thumbnail = "http://localhost:8080/images/"+ req.file.filename
-    // product.thumbnail = thumbnail
+    product.thumbnail = req.protocol+"://"+req.hostname+":8080"+'/images/'+file.filename
     productsContainer.save(product)
     .then(result => res.send(result))
 })
@@ -52,4 +52,4 @@ router.delete('/:pid', (req,res) => {
 }) 
 
 
-module.exports = router
+export default router

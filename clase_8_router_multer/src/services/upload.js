@@ -1,12 +1,31 @@
-const multer = require('multer')
+import multer from 'multer'
+// const storage = multer.diskStorage({
+//     destination: function (req, file, cb) {
+//         cb(null,'public/images')
+//     },
+//     filename: function (req, file, cb) {
+//         cb(null, Date.now()+file.fieldname+"."+file.mimetype.split('/')[1])
+//     }
+// })
+
 const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, 'public')
+    destination:(req,file,cb)=>{
+        if(file.fieldname==="image"){
+            cb(null,'public/images')
+        }else if(file.fieldname==="documents"){
+            cb(null,'documents')
+        }
+        else{
+            cb(null,'uploads')
+        }
     },
-    filename: function (req, file, cb) {
+    filename:(req,file,cb)=>{
         cb(null, Date.now()+file.fieldname+"."+file.mimetype.split('/')[1])
     }
 })
+
 const upload = multer({storage: storage})
 
-module.exports = upload
+
+
+export default upload;
