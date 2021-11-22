@@ -1,0 +1,1 @@
+Voy a usar handlebars en mi proyecto por que es el que mas fácil me parecio su sintaxis. Además de ser el mas usado actualmente.
