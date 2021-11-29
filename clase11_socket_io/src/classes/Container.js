@@ -6,9 +6,26 @@ class Container {
         this.archiveName = archiveName
     }
     
-        
+    async saveChat(message){
+        try{
+            let data = await fs.promises.readFile(__dirname+`/files/${this.archiveName}.txt`, 'utf-8')
+            let chat = JSON.parse(data)
+            chat.push(message)
+            await fs.promises.writeFile(__dirname+`/files/${this.archiveName}.txt`, JSON.stringify(chat, null, 2))
+            io.emit('messagelog', chat)
+        }catch(err){
+            try{
+                await fs.promises.writeFile(__dirname+`/files/${this.archiveName}.txt`, JSON.stringify([data], null, 2))
+                io.emit('messagelog', [message])
+            }
+            catch(err){
+                console.log(`No se pudo escribir el archivo ${err}`)
+                return {status:"error", message:"Error al agregar chat "+err}
+            }
+        }
+    }
+    
     async save(product){
-        console.log(product)
         try{
             
             let data = await fs.promises.readFile(__dirname+`/files/${this.archiveName}.txt`, 'utf-8')
@@ -24,9 +41,8 @@ class Container {
                     price: product.price,                                                                                                                                     
                     thumbnail: product.thumbnail,                                                                                                       
                 })
-                console.log(dataProduct)
-                products.push(dataProduct)
                 
+                products.push(dataProduct)
                 try{
                     await fs.promises.writeFile(__dirname+`/files/${this.archiveName}.txt`, JSON.stringify(products, null, 2))
                     console.log(`${product.title} fue agregado a ${__dirname}/files/${this.archiveName}.txt`)

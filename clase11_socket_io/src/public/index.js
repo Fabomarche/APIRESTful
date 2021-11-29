@@ -1,5 +1,35 @@
 const socket = io()
-//-----------Socket Events-----------//
+let user = document.getElementById('user')
+let input = document.getElementById('message')
+let submit = document.getElementById('submit')
+
+//-----------Socket Events------------//
+submit.addEventListener('click', () => {
+    let date = new Date()
+    if(input.value && user.value){
+        socket.emit('message', 
+            {
+            user:user.value, 
+            message:message.value, 
+            date:date.toLocaleString()
+            }
+    )}else{
+        console.log('message not send')
+    }
+})
+
+socket.on('messagelog', data => {
+    let divLog = document.getElementById('log')
+    let allMessages = data.map(message => {
+        return  `<div class="d-flex justify-content-center">
+                    <p class="user me-1">${message.user}</p>
+                    <p class="date me-2">[${message.date}]:</p>
+                    <p class="message">${message.message}</p>
+                </div>`
+    }).join('')
+    divLog.innerHTML = allMessages
+})
+
 socket.on('deliverProducts', data => {
     fetch('templates/productsTable.handlebars')
     .then(string => string.text())
@@ -15,6 +45,7 @@ socket.on('deliverProducts', data => {
 })
 
 //-----------Fin Socket Events-----------//
+
 const sendForm = (event) => {
     event.preventDefault()
     let form = document.querySelector('#productForm')

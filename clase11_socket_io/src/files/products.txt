@@ -34,5 +34,11 @@
     "title": "almohadon",
     "price": "1111",
     "thumbnail": "http://localhost:8080/images/1637595629694image.jpeg"
+  },
+  {
+    "id": 7,
+    "title": "Bolsa",
+    "price": "1000",
+    "thumbnail": "http://localhost:8080/images/1638128354918image.jpeg"
   }
 ]

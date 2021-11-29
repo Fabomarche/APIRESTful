@@ -12,7 +12,7 @@ import __dirname from '../utils.js'
 const storage = multer.diskStorage({
     destination:(req,file,cb)=>{
         if(file.fieldname==="image"){
-            cb(null, __dirname+'public/images')
+            cb(null, __dirname+'/public/images')
         }else if(file.fieldname==="documents"){
             cb(null,'documents')
         }

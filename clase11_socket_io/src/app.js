@@ -13,6 +13,8 @@ const server = app.listen(8080, () => {
 export const io = new Server(server)
 
 const productsContainer = new Container('products');
+const chatContainer = new Container('chat')
+console.log(chatContainer.getAll())
 
 app.engine('handlebars', engine())
 app.set('views', __dirname+'/views')
@@ -56,9 +58,23 @@ app.get('/views/products', (req,res)=>{
     })
 })
 
-//socket
+//--------- socket ----------------//
 io.on('connection', async socket => {
-    console.log(`El socket ${socket.id} se conecto`)
+    console.log(`the socket ${socket.id} is connected`)
     let products = await productsContainer.getAll()
     socket.emit('deliverProducts', products)
+    
+    socket.emit('messagelog', await chatContainer.getAll())
+
+    socket.on('message', async data => {
+        console.log(data)
+        await chatContainer.saveChat(data)
+        io.emit('messagelog', await chatContainer.getAll())
+        
+    })
 })
+
+
+
+
+//--------- end socket ----------------//
