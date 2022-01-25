@@ -84,10 +84,10 @@ app.post('/api/register', uploadService.single('avatar'), async (req, res) => {
         user.avatar = `${req.protocol}://${req.hostname}:${PORT}/uploads/${file.filename}`
     
         const emailFound = await UserModel.findOne({ email: user.email })
-        if (emailFound) throw new Error('Email already in use.')
+        if (emailFound) throw new Error('Email already exist.')
     
         const usernameFound = await UserModel.findOne({ username: user.username })
-        if (usernameFound) throw new Error('Username already in use.')
+        if (usernameFound) throw new Error('Username already exist.')
     
         await UserModel.create(user)
         res.send({ status: 'success', message: 'Registration has been successfully.' })
@@ -96,3 +96,4 @@ app.post('/api/register', uploadService.single('avatar'), async (req, res) => {
     res.status(400).send({ status: 'error', message: err.message })
     }
 })
+
