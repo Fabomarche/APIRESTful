@@ -1,0 +1,25 @@
+<div class="container p-5">
+  <div class="row">
+    <div class="col-sm-12 col-md-4 p-5 mb-5 d-grid" style="background-color: rgb(247, 247, 247); ">
+      <p id="username"></p>
+      <button id="logout" class="btn btn-primary">Logout</button>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-12 col-md-4 p-5" style="background-color: rgb(247, 247, 247);">
+      <h2 class="text-center">Messages Center</h2>
+
+      <div class="mt-3">
+        <input type="text" class="form-control" id="message" name="message" arial-label="Message"
+          placeholder="Write your message here...">
+      </div>
+    </div>
+
+    <div class="col-sm-12 col-md-7 offset-md-1 mt-3 mt-md-0 p-5" style="background-color: rgb(247, 247, 247);">
+      <div class="mt-3" id="chats"></div>
+    </div>
+  </div>
+</div>
+<script src="/socket.io/socket.io.js"></script>
+<script src="js/chat.js"></script>
