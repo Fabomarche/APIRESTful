@@ -9,6 +9,9 @@ import { engine } from 'express-handlebars'
 import { Server } from 'socket.io'
 import ChatsService from './services/chatsService.js'
 import uploadService from './services/uploadService.js'
+import chats from './routes/chats.js'
+import { UserModel } from './dao/models/User.js'
+
 
 const expires = 600
 const chatsService = new ChatsService()
@@ -97,3 +100,50 @@ app.post('/api/register', uploadService.single('avatar'), async (req, res) => {
     }
 })
 
+app.post('/api/login', async (req, res) => {
+    try {
+        const { email, password } = req.body
+        if (!email || !password) throw new Error('Username or password are incorrect.')
+        const user = await UserModel.findOne({ email: email })
+        if (!user) throw new Error('User not found.')
+        if (user.password !== password) throw new Error('Incorrect password.')
+        req.session.user = {
+        username: user.username,
+        email: user.email
+        }
+        res.send({ status: 'success' })
+    } catch (err) {
+        console.error(err)
+        res.status(400).send({ status: 'error', message: err.message })
+    }
+})
+
+app.get('/api/login', (req, res) => {
+    if (req.session.user)
+        res.send(req.session.user)
+    else
+        res.send({ status: 'error', message: 'You are not log in.' })
+})
+
+app.post('/api/logout', (req, res) => {
+    const { username } = req.session.user
+    req.session.user = null
+    res.send({ status: 'success', payload: { username: username } })
+})
+
+//Render Views
+app.get('/', (req, res) => {
+    res.render('login')
+})
+
+app.get('/register', (req, res) => {
+    res.render('register')
+})
+
+app.get('/chat', (req, res) => {
+    res.render('chat')
+})
+
+app.get('/logout', (req, res) => {
+    res.render('logout')
+})
