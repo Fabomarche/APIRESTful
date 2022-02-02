@@ -11,7 +11,7 @@ randomApiRouter.get("/random", (req, res) => {
       });
       return;
     }
-    const random = fork("./src/utils/random.js", [cant]);
+    const random = fork("./utils/random.js", [cant]);
     random.on("message", (data) => {
       res.json({ iterations: cant, numbers: data });
     });

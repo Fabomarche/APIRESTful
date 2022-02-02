@@ -3,18 +3,30 @@ import session from 'express-session';
 import mongoose from 'mongoose';
 import passport from 'passport';
 import MongoStore from 'connect-mongo';
+import dotenv from 'dotenv'
+import minimist from 'minimist';
 import cors from 'cors';
 import initializePassportConfig from './passport-config.js';
 import randomApiRouter from './routers/random.js';
 
+dotenv.config()
+
+let minimizedArg = minimist(process.argv.slice(2))
+let config ={
+    port: minimizedArg.p || 8080,
+}
+
+console.log()
 const app = express();
-const server = app.listen(8080,()=>console.log(`Listening on 8080`))
-const connection  = mongoose.connect('mongodb+srv://Fabo:Progreso22@clusterfabo.hyrfo.mongodb.net/ecommerce?retryWrites=true&w=majority');
+const server = app.listen(config.port ,()=>console.log(`Listening on ${config.port}`))
+const connection  = mongoose.connect(process.env.MONGO_URL);
+
+console.log()
 
 app.use(cors());
 app.use(session({
-    store:MongoStore.create({mongoUrl:'mongodb+srv://Fabo:Progreso22@clusterfabo.hyrfo.mongodb.net/ecommerce?retryWrites=true&w=majority'}),
-    secret:"f4b0Facebook",
+    store:MongoStore.create({mongoUrl:process.env.MONGO_URL}),
+    secret:process.env.SESSION_SECRET,
     resave:false,
     saveUninitialized:false
 }))
