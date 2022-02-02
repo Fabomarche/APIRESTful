@@ -5,6 +5,7 @@ import passport from 'passport';
 import MongoStore from 'connect-mongo';
 import cors from 'cors';
 import initializePassportConfig from './passport-config.js';
+import randomApiRouter from './routers/random.js';
 
 const app = express();
 const server = app.listen(8080,()=>console.log(`Listening on 8080`))
@@ -40,3 +41,18 @@ app.get('/failPage', (req, res) => {
 app.get('/logout',(req,res)=>{
     req.logout();
 })
+
+app.get('/info',(req,res) => {
+    const info = {
+        argv: process.argv,
+        execPath: process.execPath,
+        platform: process.platform,
+        processId: process.pid,
+        version: process.version,
+        projectDir: process.cwd(),
+        reservedMemory: process.memoryUsage().rss
+    }
+    res.send(info)
+})
+
+app.use("/api", randomApiRouter)
