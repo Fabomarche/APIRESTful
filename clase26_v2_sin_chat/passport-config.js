@@ -8,7 +8,7 @@ const initializePassportConfig = () =>{
     passport.use('facebook',new FacebookStrategy({
         clientID:'333143892148690',
         clientSecret:'1aa04e42f3e190501101e47f35959a39',
-        callbackURL:'https://e8a3-191-84-248-118.ngrok.io/auth/facebook/callback',
+        callbackURL:'https://a9f9-191-84-251-78.ngrok.io/auth/facebook/callback',
         profileFields:['emails']
     },async (accessToken,refreshToken,profile,done)=>{
         try{

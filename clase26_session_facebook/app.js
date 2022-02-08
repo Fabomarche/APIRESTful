@@ -95,7 +95,7 @@ app.get('/auth/facebook/callback',passport.authenticate('facebook',{
     res.send({message:"FINALMENTE, logueado :)"})
 })
 
-app.get('/fail', (req, res) => {
+app.get('/paginadeFail', (req, res) => {
     res.send({ status: 'error', message: 'Ha fallado el inicio de sesión en Facebook.' })
   })
   

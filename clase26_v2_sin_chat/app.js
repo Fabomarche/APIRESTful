@@ -35,7 +35,7 @@ app.get('/auth/facebook/callback',passport.authenticate('facebook',{
 
 app.get('/failPage', (req, res) => {
     res.send({ message: 'Ha fallado el inicio de sesión en Facebook.' })
-  })
+})
 
 app.get('/logout',(req,res)=>{
     req.logout();
